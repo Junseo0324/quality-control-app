@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../../core/ui/app_colors.dart';
-import '../components/header_tab.dart';
 import '../components/dough_input_card.dart';
 import '../components/dough_input_field.dart';
 import '../components/primary_button.dart';
@@ -25,11 +24,7 @@ class DoughScreen extends StatelessWidget {
           padding: const EdgeInsets.all(20),
           child: Column(
             children: [
-              HeaderTab(
-                selectedIndex: state.selectedTabIndex,
-                onChanged: (index) => onIntent(DoughIntent.tabChanged(index)),
-              ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 20),
               
               DoughInputCard(
                 title: '어제 도우',

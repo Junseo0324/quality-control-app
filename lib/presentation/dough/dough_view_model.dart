@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import '../../domain/models/calculation_result.dart';
 import '../../domain/services/dough_calculator_service.dart';
-import '../../domain/models/dough_type.dart';
 import 'dough_intent.dart';
 import 'dough_state.dart';
 
@@ -13,7 +12,6 @@ class DoughViewModel extends ValueNotifier<DoughState> {
 
   void onIntent(DoughIntent intent) {
     intent.when(
-      tabChanged: (index) => value = value.copyWith(selectedTabIndex: index),
       yesterdayDefrostChanged: (amount) => value = value.copyWith(yesterdayDefrostAmount: amount),
       leftoverCarryOverChanged: (amount) => value = value.copyWith(leftoverCarryOverAmount: amount),
       todayNewChanged: (amount) => value = value.copyWith(todayNewAmount: amount),
@@ -27,10 +25,7 @@ class DoughViewModel extends ValueNotifier<DoughState> {
     final yesterdayDefrost = int.tryParse(value.yesterdayDefrostAmount) ?? 0;
     final leftover = int.tryParse(value.leftoverCarryOverAmount) ?? 0;
 
-    // 2. 선택된 도우 종류 판별
-    final doughType = DoughType.values[value.selectedTabIndex];
-
-    // 3. 로직 수행
+    // 2. 로직 수행
     final calculationResult = _calculatorService.calculateCarryOver(
       yesterdayDefrost: yesterdayDefrost,
       leftoverCarryOver: leftover,
