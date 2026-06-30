@@ -11,13 +11,12 @@ class DoughCalculatorService {
       return CalculationResult(
         isFakeLogicApplied: true,
         recommendedYesterdayDefrost: recommended,
-        message: '어제 해동 수량을 $recommended개로 보정해서 다시 적어주세요.',
       );
     } else {
+      // 정상
       return CalculationResult(
         isFakeLogicApplied: false,
         recommendedYesterdayDefrost: yesterdayDefrost,
-        message: '통과',
       );
     }
   }
