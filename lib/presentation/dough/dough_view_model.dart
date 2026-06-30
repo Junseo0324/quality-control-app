@@ -5,7 +5,6 @@ import 'dough_intent.dart';
 import 'dough_state.dart';
 
 /// 비즈니스 로직과 화면의 상태를 관리하는 ViewModel
-/// MVI (Model-View-Intent) 패턴을 적용하여 단일 진입점(onIntent)으로 이벤트를 처리합니다.
 class DoughViewModel extends ValueNotifier<DoughState> {
   final DoughCalculatorService _calculatorService;
 
