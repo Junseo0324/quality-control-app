@@ -3,17 +3,49 @@ import 'package:flutter/material.dart';
 import '../../core/ui/app_colors.dart';
 import '../../core/ui/app_text_styles.dart';
 
-class DoughInputField extends StatelessWidget {
+class DoughInputField extends StatefulWidget {
   final String label;
   final String hintText;
-  final TextEditingController? controller;
+  final String initialValue;
+  final ValueChanged<String>? onChanged;
 
   const DoughInputField({
     super.key,
     required this.label,
     required this.hintText,
-    this.controller,
+    this.initialValue = '',
+    this.onChanged,
   });
+
+  @override
+  State<DoughInputField> createState() => _DoughInputFieldState();
+}
+
+class _DoughInputFieldState extends State<DoughInputField> {
+  late final TextEditingController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController(text: widget.initialValue);
+    _controller.addListener(() {
+      widget.onChanged?.call(_controller.text);
+    });
+  }
+
+  @override
+  void didUpdateWidget(covariant DoughInputField oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.initialValue != widget.initialValue && _controller.text != widget.initialValue) {
+      _controller.text = widget.initialValue;
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +53,7 @@ class DoughInputField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          label,
+          widget.label,
           style: AppTextStyles.labelSm.copyWith(
             color: AppColors.warmGray,
             fontWeight: FontWeight.w600,
@@ -40,14 +72,14 @@ class DoughInputField extends StatelessWidget {
             children: [
               Expanded(
                 child: TextField(
-                  controller: controller,
+                  controller: _controller,
                   style: AppTextStyles.displaySm.copyWith(
                     color: AppColors.charcoal,
                     fontWeight: FontWeight.w700,
                   ),
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
-                    hintText: hintText,
+                    hintText: widget.hintText,
                     hintStyle: AppTextStyles.displaySm.copyWith(
                       color: AppColors.charcoal.withOpacity(0.5),
                       fontWeight: FontWeight.w700,
