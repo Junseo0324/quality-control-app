@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import '../../domain/models/calculation_result.dart';
 import '../../domain/services/dough_calculator_service.dart';
 import '../../domain/models/dough_type.dart';
 import 'dough_intent.dart';
@@ -17,6 +18,7 @@ class DoughViewModel extends ValueNotifier<DoughState> {
       leftoverCarryOverChanged: (amount) => value = value.copyWith(leftoverCarryOverAmount: amount),
       todayNewChanged: (amount) => value = value.copyWith(todayNewAmount: amount),
       calculate: _calculate,
+      clearResult: () => value = value.copyWith(calculationResult: null),
     );
   }
 
@@ -25,17 +27,16 @@ class DoughViewModel extends ValueNotifier<DoughState> {
     final yesterdayDefrost = int.tryParse(value.yesterdayDefrostAmount) ?? 0;
     final leftover = int.tryParse(value.leftoverCarryOverAmount) ?? 0;
 
+    // 2. 선택된 도우 종류 판별
     final doughType = DoughType.values[value.selectedTabIndex];
 
     // 3. 로직 수행
-    final defrostTime = _calculatorService.getDefrostTime(doughType);
-    final disposalTime = '다음날 마감 시 폐기';
-    final carryOverResult = _calculatorService.calculateCarryOver(
+    final calculationResult = _calculatorService.calculateCarryOver(
       yesterdayDefrost: yesterdayDefrost,
       leftoverCarryOver: leftover,
     );
 
-    // TODO: 계산 결과를 상태에 저장하거나 이벤트를 발생시켜 UI에서 다이얼로그를 띄우도록 처리
-    print('ViewModel 계산 결과 - 야매로직 발동: ${carryOverResult.isFakeLogicApplied}, 메시지: ${carryOverResult.message}');
+    // 결과를 상태(State)에 저장하여 UI가 감지하도록 합니다 (단방향 데이터 플로우)
+    value = value.copyWith(calculationResult: calculationResult);
   }
 }

@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import '../../domain/models/calculation_result.dart';
 
 part 'dough_state.freezed.dart';
 
@@ -9,5 +10,6 @@ abstract class DoughState with _$DoughState {
     @Default('') String yesterdayDefrostAmount,
     @Default('') String leftoverCarryOverAmount,
     @Default('') String todayNewAmount,
+    CalculationResult? calculationResult,
   }) = _DoughState;
 }

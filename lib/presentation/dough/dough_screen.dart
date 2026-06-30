@@ -25,7 +25,6 @@ class DoughScreen extends StatelessWidget {
           padding: const EdgeInsets.all(20),
           child: Column(
             children: [
-              const SizedBox(height: 50),
               HeaderTab(
                 selectedIndex: state.selectedTabIndex,
                 onChanged: (index) => onIntent(DoughIntent.tabChanged(index)),
