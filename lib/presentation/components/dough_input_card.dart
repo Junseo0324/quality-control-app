@@ -6,14 +6,12 @@ import '../../core/ui/app_text_styles.dart';
 
 /// 디자인 시안의 "어제 도우 (1번 배치)" 등을 구성하는 카드 컴포넌트
 class DoughInputCard extends StatelessWidget {
-  final int batchNumber;
   final String title;
   final Color badgeColor;
   final List<Widget> children;
 
   const DoughInputCard({
     super.key,
-    required this.batchNumber,
     required this.title,
     this.badgeColor = AppColors.charcoal,
     required this.children,
@@ -38,33 +36,11 @@ class DoughInputCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                width: 24,
-                height: 24,
-                decoration: BoxDecoration(
-                  color: badgeColor,
-                  shape: BoxShape.circle,
-                ),
-                alignment: Alignment.center,
-                child: Text(
-                  batchNumber.toString(),
-                  style: AppTextStyles.labelXs.copyWith(
-                    color: AppColors.white,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ),
-              const SizedBox(width: 8),
-              Text(
-                title,
-                style: AppTextStyles.headingSm.copyWith(
-                  color: AppColors.charcoal,
-                ),
-              ),
-            ],
+          Text(
+            title,
+            style: AppTextStyles.headingSm.copyWith(
+              color: AppColors.charcoal,
+            ),
           ),
           const SizedBox(height: 16),
           Column(
