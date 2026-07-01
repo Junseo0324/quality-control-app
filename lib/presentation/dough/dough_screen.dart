@@ -3,17 +3,17 @@ import '../../core/ui/app_colors.dart';
 import '../components/dough_input_card.dart';
 import '../components/dough_input_field.dart';
 import '../components/primary_button.dart';
-import 'dough_intent.dart';
+import 'dough_action.dart';
 import 'dough_state.dart';
 
 class DoughScreen extends StatelessWidget {
   final DoughState state;
-  final ValueChanged<DoughIntent> onIntent;
+  final ValueChanged<DoughAction> onAction;
 
   const DoughScreen({
     super.key,
     required this.state,
-    required this.onIntent,
+    required this.onAction,
   });
 
   @override
@@ -28,19 +28,18 @@ class DoughScreen extends StatelessWidget {
               
               DoughInputCard(
                 title: '어제 도우',
-                badgeColor: AppColors.charcoal,
                 children: [
                   DoughInputField(
                     label: '해동했던 수량',
                     hintText: '예: 24',
                     initialValue: state.yesterdayDefrostAmount,
-                    onChanged: (amount) => onIntent(DoughIntent.yesterdayDefrostChanged(amount)),
+                    onChanged: (amount) => onAction(DoughAction.yesterdayDefrostChanged(amount)),
                   ),
                   DoughInputField(
                     label: '남은 이월 수량',
                     hintText: '예: 14',
                     initialValue: state.leftoverCarryOverAmount,
-                    onChanged: (amount) => onIntent(DoughIntent.leftoverCarryOverChanged(amount)),
+                    onChanged: (amount) => onAction(DoughAction.leftoverCarryOverChanged(amount)),
                   ),
                 ],
               ),
@@ -48,13 +47,12 @@ class DoughScreen extends StatelessWidget {
               
               DoughInputCard(
                 title: '오늘 도우',
-                badgeColor: AppColors.doughSfo,
                 children: [
                   DoughInputField(
                     label: '오늘 새로 해동할 수량',
                     hintText: '예: 20',
                     initialValue: state.todayNewAmount,
-                    onChanged: (amount) => onIntent(DoughIntent.todayNewChanged(amount)),
+                    onChanged: (amount) => onAction(DoughAction.todayNewChanged(amount)),
                   ),
                 ],
               ),
@@ -62,7 +60,7 @@ class DoughScreen extends StatelessWidget {
               
               PrimaryButton(
                 label: '계산하기',
-                onTap: () => onIntent(const DoughIntent.calculate()),
+                onTap: () => onAction(const DoughAction.calculate()),
               ),
             ],
           ),

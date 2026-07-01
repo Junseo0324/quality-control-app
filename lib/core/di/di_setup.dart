@@ -9,5 +9,7 @@ void diSetup() {
   getIt.registerLazySingleton<DoughCalculatorService>(() => DoughCalculatorService());
 
   // ViewModel
-  getIt.registerFactory<DoughViewModel>(() => DoughViewModel(getIt()));
+  getIt.registerFactory<DoughViewModel>(
+    () => DoughViewModel(calculatorService: getIt()),
+  );
 }
